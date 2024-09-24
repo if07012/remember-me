@@ -22,6 +22,7 @@ export interface DustbinProps {
     index: any,
     isSubmit: boolean,
     isPreview: boolean
+    onDelete: (item: any) => void
 }
 
 export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
@@ -29,7 +30,8 @@ export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
     lastDroppedItem,
     onDrop,
     index, isSubmit,
-    isPreview
+    isPreview,
+    onDelete
 }) {
     const [{ isOver, canDrop }, drop] = useDrop({
         accept,
@@ -66,8 +68,9 @@ export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
                     {lastDroppedItem && (
                         <img src={`/ayat/ayat${lastDroppedItem.name}.png`} />
                     )}
-                </>}
 
+                </>}
+            {lastDroppedItem && <span onClick={() => { onDelete(lastDroppedItem) }}> Delete</span>}
         </div>
     )
 })

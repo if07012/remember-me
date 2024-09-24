@@ -97,7 +97,25 @@ export const Container: FC = memo(function Container() {
     function isDropped(boxName: string) {
         return droppedBoxNames.indexOf(boxName) > -1
     }
-
+    const removeDrop = useCallback(
+        (index: number, item: { name: string }) => {
+            const { name } = item
+            if (dustbins[index].lastDroppedItem) {
+                return;
+            }
+            setDroppedBoxNames([...droppedBoxNames.filter(n => n !== name)])
+            setDustbins(
+                update(dustbins, {
+                    [index]: {
+                        lastDroppedItem: {
+                            $set: undefined,
+                        },
+                    },
+                }),
+            )
+        },
+        [droppedBoxNames, dustbins],
+    )
     const handleDrop = useCallback(
         (index: number, item: { name: string }) => {
             const { name } = item
@@ -133,6 +151,10 @@ export const Container: FC = memo(function Container() {
                         key={index}
                         index={index + 1}
                         isPreview={isPreview}
+                        onDelete={((item: any) => {
+                            console.log(item)
+                            removeDrop(index, item)
+                        })}
                     />
                 ))}
             </div>
@@ -144,6 +166,7 @@ export const Container: FC = memo(function Container() {
                         type={type}
                         isDropped={isDropped(name)}
                         key={index}
+
                     />
                 ))}
             </div>
@@ -173,7 +196,6 @@ export const Container: FC = memo(function Container() {
                     setDustbins([...initialState])
                     setPreview(false)
                     setSubmit(false)
-                    setAyat(5);
                     setDroppedBoxNames([])
                 }}>Reset</Button>
                 <Button style={{ marginTop: '2rem' }} type="submit" onClick={() => {
