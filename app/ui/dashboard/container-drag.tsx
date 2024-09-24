@@ -185,7 +185,7 @@ export const Container: FC = memo(function Container(props: any) {
     const removeDrop = useCallback(
         (index: number, item: { name: string }) => {
             const { name } = item
-            if (dustbins[index].lastDroppedItem) {
+            if (!dustbins[index].lastDroppedItem) {
                 return;
             }
             setDroppedBoxNames([...droppedBoxNames.filter(n => n !== name)])
@@ -237,7 +237,6 @@ export const Container: FC = memo(function Container(props: any) {
                         index={index + 1}
                         isPreview={isPreview}
                         onDelete={((item: any) => {
-                            console.log(item)
                             removeDrop(index, item)
                         })}
                     />

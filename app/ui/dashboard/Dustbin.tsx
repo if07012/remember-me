@@ -72,7 +72,7 @@ export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
                     )}
 
                 </>}
-            {lastDroppedItem && <span onClick={() => { onDelete(lastDroppedItem) }}> Delete</span>}
+            {lastDroppedItem && <span style={{color:'black'}} onClick={() => { onDelete(lastDroppedItem) }}> Delete</span>}
         </div>
     )
 })
