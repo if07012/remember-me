@@ -60,6 +60,7 @@ export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
                 <img src={`/ayat/ayat${index}.png`} />
             </> :
                 <>
+                    {backgroundColor === "red" && <img src={`/ayat/ayat${index}.png`} />}
                     {isActive ? "Release Drop" : <h2 style={{ color: '#000', fontSize: '2rem' }}>{index}</h2>}
 
                     {lastDroppedItem && (

@@ -65,6 +65,7 @@ export const Container: FC = memo(function Container() {
     const [boxes, setBox] = useState<BoxState[]>([
         { name: '1', type: "ayat" },
         { name: '2', type: "ayat" },
+        { name: '3', type: "ayat" },
         { name: '4', type: "ayat" },
         { name: '5', type: "ayat" },
         { name: '6', type: "ayat" },
@@ -152,6 +153,7 @@ export const Container: FC = memo(function Container() {
                     name="customerId"
                     className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                     defaultValue={5}
+                    value={ayat}
                     onChange={onChangeAyat}
                 >
 
@@ -171,7 +173,14 @@ export const Container: FC = memo(function Container() {
                     setDustbins([...initialState])
                     setPreview(false)
                     setSubmit(false)
+                    setAyat(5);
+                    setDroppedBoxNames([])
                 }}>Reset</Button>
+                <Button style={{ marginTop: '2rem' }} type="submit" onClick={() => {
+                    setDustbins([...initialState])
+                    setPreview(false)
+                    setDroppedBoxNames([])
+                }}>Start</Button>
             </div>
         </div >
     )
