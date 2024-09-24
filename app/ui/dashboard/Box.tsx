@@ -29,9 +29,9 @@ export const Box: FC<BoxProps> = memo(function Box({ name, type, isDropped }) {
         }),
         [name, type],
     )
-
+    const ref: any = drag;
     return (
-        <div ref={drag} style={{ ...style, opacity, display: isDropped ? 'none' : 'initial' }} data-testid="box">
+        <div ref={ref} style={{ ...style, opacity, display: isDropped ? 'none' : 'initial' }} data-testid="box">
             {isDropped ? <></> :
                 <img src={`/ayat/ayat${name}.png`} style={{ objectFit: 'contain', width: '300px', height: '100px' }} />}
         </div>
