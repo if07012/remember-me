@@ -1,4 +1,4 @@
-import type { CSSProperties, FC } from 'react'
+import type { CSSProperties, FC, LegacyRef } from 'react'
 import { memo } from 'react'
 import { useDrop } from 'react-dnd'
 
@@ -52,9 +52,9 @@ export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
         else
             backgroundColor = "red";
     }
-
+    const ref: any = drop;
     return (
-        <div ref={drop} style={{ ...style, backgroundColor, border: '1px solid #000' }} data-testid="dustbin" >
+        <div ref={ref} style={{ ...style, backgroundColor, border: '1px solid #000' }} data-testid="dustbin" >
             {isPreview ? <>
                 <h2 style={{ color: '#000', fontSize: '2rem' }}>{index}</h2>
                 <img src={`/ayat/ayat${index}.png`} />
