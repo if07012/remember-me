@@ -15,10 +15,11 @@ const style: CSSProperties = {
 export interface BoxProps {
     name: string
     type: string
+    path: string
     isDropped: boolean
 }
 
-export const Box: FC<BoxProps> = memo(function Box({ name, type, isDropped }) {
+export const Box: FC<BoxProps> = memo(function Box({ name, type, isDropped, path }) {
     const [{ opacity }, drag] = useDrag(
         () => ({
             type,
@@ -33,7 +34,7 @@ export const Box: FC<BoxProps> = memo(function Box({ name, type, isDropped }) {
     return (
         <div ref={ref} style={{ ...style, opacity, display: isDropped ? 'none' : 'initial' }} data-testid="box">
             {isDropped ? <></> :
-                <img src={`/ayat/ayat${name}.png`} style={{ objectFit: 'contain', width: '300px', height: '100px' }} />}
+                <img src={`/ayat/${path}/ayat${name}.png`} style={{ objectFit: 'contain', width: '300px', height: '100px' }} />}
         </div>
     )
 })

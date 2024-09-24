@@ -22,7 +22,8 @@ export interface DustbinProps {
     index: any,
     isSubmit: boolean,
     isPreview: boolean
-    onDelete: (item: any) => void
+    onDelete: (item: any) => void,
+    name:string
 }
 
 export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
@@ -31,7 +32,8 @@ export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
     onDrop,
     index, isSubmit,
     isPreview,
-    onDelete
+    onDelete,
+    name
 }) {
     const [{ isOver, canDrop }, drop] = useDrop({
         accept,
@@ -59,14 +61,14 @@ export const Dustbin: FC<DustbinProps> = memo(function Dustbin({
         <div ref={ref} style={{ ...style, backgroundColor, border: '1px solid #000' }} data-testid="dustbin" >
             {isPreview ? <>
                 <h2 style={{ color: '#000', fontSize: '2rem' }}>{index}</h2>
-                <img src={`/ayat/ayat${index}.png`} />
+                <img src={`/ayat/${name}/ayat${index}.png`} />
             </> :
                 <>
-                    {backgroundColor === "red" && <img src={`/ayat/ayat${index}.png`} />}
+                    {backgroundColor === "red" && <img src={`/ayat/${name}/ayat${index}.png`} />}
                     {isActive ? "Release Drop" : <h2 style={{ color: '#000', fontSize: '2rem' }}>{index}</h2>}
 
                     {lastDroppedItem && (
-                        <img src={`/ayat/ayat${lastDroppedItem.name}.png`} />
+                        <img src={`/ayat/${name}/ayat${lastDroppedItem.name}.png`} />
                     )}
 
                 </>}

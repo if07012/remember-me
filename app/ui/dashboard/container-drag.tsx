@@ -32,37 +32,71 @@ export interface ContainerState {
     dustbins: DustbinSpec[]
     boxes: BoxSpec[]
 }
-const initialState = [
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-    { accepts: ["ayat"], lastDroppedItem: null },
-]
-export const Container: FC = memo(function Container() {
-    const [ayat, setAyat] = useState<number>(5);
-    const [isSubmit, setSubmit] = useState<boolean>(false);
-    const [isPreview, setPreview] = useState<boolean>(false);
-    const [randomBoxes, setRandomBoxes] = useState<BoxState[]>([]);
-
-    const [dustbins, setDustbins] = useState<DustbinState[]>([...initialState])
-
-    const [boxes, setBox] = useState<BoxState[]>([
+const initialState: any = {
+    'albalad': [
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+    ],
+    'allail': [
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+    ], 'assham': [
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+    ]
+}
+const intialBox: any = {
+    'albalad': [
         { name: '1', type: "ayat" },
         { name: '2', type: "ayat" },
         { name: '3', type: "ayat" },
@@ -83,7 +117,58 @@ export const Container: FC = memo(function Container() {
         { name: '18', type: "ayat" },
         { name: '19', type: "ayat" },
         { name: '20', type: "ayat" },
-    ])
+    ],
+    "allail": [
+        { name: '1', type: "ayat" },
+        { name: '2', type: "ayat" },
+        { name: '3', type: "ayat" },
+        { name: '4', type: "ayat" },
+        { name: '5', type: "ayat" },
+        { name: '6', type: "ayat" },
+        { name: '7', type: "ayat" },
+        { name: '8', type: "ayat" },
+        { name: '9', type: "ayat" },
+        { name: '10', type: "ayat" },
+        { name: '11', type: "ayat" },
+        { name: '12', type: "ayat" },
+        { name: '13', type: "ayat" },
+        { name: '14', type: "ayat" },
+        { name: '15', type: "ayat" },
+        { name: '16', type: "ayat" },
+        { name: '17', type: "ayat" },
+        { name: '18', type: "ayat" },
+        { name: '19', type: "ayat" },
+        { name: '20', type: "ayat" },
+        { name: '21', type: "ayat" },
+    ], "assham": [
+        { name: '1', type: "ayat" },
+        { name: '2', type: "ayat" },
+        { name: '3', type: "ayat" },
+        { name: '4', type: "ayat" },
+        { name: '5', type: "ayat" },
+        { name: '6', type: "ayat" },
+        { name: '7', type: "ayat" },
+        { name: '8', type: "ayat" },
+        { name: '9', type: "ayat" },
+        { name: '10', type: "ayat" },
+        { name: '11', type: "ayat" },
+        { name: '12', type: "ayat" },
+        { name: '13', type: "ayat" },
+        { name: '14', type: "ayat" },
+        { name: '15', type: "ayat" },
+    ]
+}
+export const Container: FC = memo(function Container(props: any) {
+    const name = props.surat;
+    const surat = props.surat;
+    const [ayat, setAyat] = useState<number>(5);
+    const [isSubmit, setSubmit] = useState<boolean>(false);
+    const [isPreview, setPreview] = useState<boolean>(false);
+    const [randomBoxes, setRandomBoxes] = useState<BoxState[]>([]);
+
+    const [dustbins, setDustbins] = useState<DustbinState[]>([...initialState[surat]])
+
+    const [boxes, setBox] = useState<BoxState[]>([...intialBox[surat]])
 
     useEffect(() => {
         const shuffled = [...boxes.slice(0, ayat)].sort(() => 0.5 - Math.random()); // Shuffle the array
@@ -140,10 +225,10 @@ export const Container: FC = memo(function Container() {
 
     return (
         <div>
-
             <div style={{ overflow: 'hidden', clear: 'both', marginTop: '30px' }}>
                 {[...dustbins].slice(0, ayat).map(({ accepts, lastDroppedItem }, index) => (
                     <Dustbin
+                        name={name}
                         accept={accepts}
                         lastDroppedItem={lastDroppedItem}
                         onDrop={(item) => handleDrop(index, item)}
@@ -162,6 +247,7 @@ export const Container: FC = memo(function Container() {
             <div style={{ overflow: 'hidden', clear: 'both' }}>
                 {[...randomBoxes].slice(0, ayat).map(({ name, type }, index) => (
                     <Box
+                        path={surat}
                         name={name}
                         type={type}
                         isDropped={isDropped(name)}
@@ -193,13 +279,13 @@ export const Container: FC = memo(function Container() {
                 <Button style={{ marginTop: '2rem' }} type="submit" onClick={() => setSubmit(true)}>Submit</Button>
                 <Button style={{ marginTop: '2rem' }} type="submit" onClick={() => setPreview(true)}>Preview</Button>
                 <Button style={{ marginTop: '2rem' }} type="submit" onClick={() => {
-                    setDustbins([...initialState])
+                    setDustbins([...initialState[surat]])
                     setPreview(false)
                     setSubmit(false)
                     setDroppedBoxNames([])
                 }}>Reset</Button>
                 <Button style={{ marginTop: '2rem' }} type="submit" onClick={() => {
-                    setDustbins([...initialState])
+                    setDustbins([...initialState[surat]])
                     setPreview(false)
                     setDroppedBoxNames([])
                 }}>Start</Button>
