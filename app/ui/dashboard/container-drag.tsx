@@ -238,6 +238,8 @@ export const Container: FC = memo(function Container(props: any) {
                         isPreview={isPreview}
                         onDelete={((item: any) => {
                             removeDrop(index, item)
+                            setPreview(false)
+                            setSubmit(false)
                         })}
                     />
                 ))}
