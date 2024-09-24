@@ -7,6 +7,7 @@ import { ItemTypes } from './ItemTypes'
 import { Dustbin } from './Dustbin'
 import { Box } from './Box'
 import { Button } from '../button';
+import BackgroundSound from './BackgroundSound';
 
 
 interface DustbinState {
@@ -162,6 +163,7 @@ export const Container: FC = memo(function Container(props: any) {
     const name = props.surat;
     const surat = props.surat;
     const [ayat, setAyat] = useState<number>(5);
+    const [currentDrag, setCurrentDrag] = useState<string>("");
     const [isSubmit, setSubmit] = useState<boolean>(false);
     const [isPreview, setPreview] = useState<boolean>(false);
     const [randomBoxes, setRandomBoxes] = useState<BoxState[]>([]);
@@ -225,6 +227,7 @@ export const Container: FC = memo(function Container(props: any) {
 
     return (
         <div>
+            <BackgroundSound name={currentDrag} />
             <div style={{ overflow: 'hidden', clear: 'both', marginTop: '30px' }}>
                 {[...dustbins].slice(0, ayat).map(({ accepts, lastDroppedItem }, index) => (
                     <Dustbin
@@ -253,6 +256,9 @@ export const Container: FC = memo(function Container(props: any) {
                         type={type}
                         isDropped={isDropped(name)}
                         key={index}
+                        onDragging={(name) => {
+                            setCurrentDrag(name);
+                        }}
 
                     />
                 ))}
