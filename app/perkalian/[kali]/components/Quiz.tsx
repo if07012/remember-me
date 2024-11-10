@@ -64,14 +64,14 @@ const Quiz = ({ kali }: any) => {
                                 if (!n.jawaban)
                                     return <></>
                                 return <div>
-                                    {n.a} X {n.b} = {n.jawaban} ({n.hasil})
+                                    {n.b} X {n.a}  = {n.jawaban} ({n.hasil})
                                 </div>
                             })}
                         </div>
                         <div className="bg-green-500 p-4 text-white rounded">
                             {index <= item.length &&
                                 <h1 className="text-5xl font-bold text-gray-900 flex items-center justify-center">
-                                    {currentItem.a} X {currentItem.b} = <input type='number' value={result}
+                                    {currentItem.b}X {currentItem.a}  = <input type='number' value={result}
                                         onChange={(e) => {
                                             setResult(e.target.value)
                                         }}
