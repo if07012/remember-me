@@ -1,5 +1,5 @@
+import Perkalian from "./components/Perkalian";
 
-import Perkalian from './components/perkalian';
 
 export default async function Page({ params }: { params: { kali: string } }) {
     const kali = params.kali;
