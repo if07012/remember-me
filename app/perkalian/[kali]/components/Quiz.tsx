@@ -59,7 +59,7 @@ const Quiz = ({ kali }: any) => {
                 </h1>
                 <div className="container mx-auto p-6">
                     <div className="flex flex-col md:flex-row gap-6">
-                        <div className="bg-blue-500 p-4 text-white rounded">
+                        <div className="bg-blue-500 p-4 text-white rounded w-fit">
                             {item.map((n: any) => {
                                 if (!n.jawaban)
                                     return <></>
@@ -68,7 +68,7 @@ const Quiz = ({ kali }: any) => {
                                 </div>
                             })}
                         </div>
-                        <div className="bg-green-500 p-4 text-white rounded">
+                        <div className="bg-green-500 p-4 text-white rounded w-fit">
                             {index <= item.length &&
                                 <h1 className="text-5xl font-bold text-gray-900 flex items-center justify-center">
                                     {currentItem.b}X {currentItem.a}  = <input type='number' value={result}
