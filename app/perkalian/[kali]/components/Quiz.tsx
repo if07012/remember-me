@@ -64,7 +64,7 @@ const Quiz = ({ kali }: any) => {
                                 if (!n.jawaban)
                                     return <></>
                                 return <div>
-                                    {n.b} X {n.a}  = {n.jawaban} ({n.hasil})
+                                    {n.b} X {n.a}  = {n.jawaban} ({n.hasil === "Salah" ? n.hasil + " jawaban nya " + n.result : n.hasil})
                                 </div>
                             })}
                         </div>
