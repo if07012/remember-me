@@ -69,26 +69,28 @@ const Quiz = ({ kali }: any) => {
                             })}
                         </div>
                         <div className="bg-green-500 p-4 text-white rounded">
-                            <h1 className="text-5xl font-bold text-gray-900 flex items-center justify-center">
-                                {currentItem.a} X {currentItem.b} = <input type='number' value={result}
-                                    onChange={(e) => {
-                                        setResult(e.target.value)
-                                    }}
-                                    onKeyDown={e => {
-                                        if (e.key === "Enter") {
-                                            onSubmit(result);
-                                        }
-                                    }}
-                                />
-                                &nbsp;
-                                <button className="bg-green-500 hover:bg-blue-600
+                            {index <= item.length &&
+                                <h1 className="text-5xl font-bold text-gray-900 flex items-center justify-center">
+                                    {currentItem.a} X {currentItem.b} = <input type='number' value={result}
+                                        onChange={(e) => {
+                                            setResult(e.target.value)
+                                        }}
+                                        onKeyDown={e => {
+                                            if (e.key === "Enter") {
+                                                onSubmit(result);
+                                            }
+                                        }}
+                                    />
+                                    &nbsp;
+                                    <button className="bg-green-500 hover:bg-blue-600
                              text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => {
-                                        onSubmit(result);
-                                    }}>
-                                    Submit
-                                </button>
-                            </h1>
+                                        onClick={() => {
+                                            onSubmit(result);
+                                        }}>
+                                        Submit
+                                    </button>
+                                </h1>
+                            }
                         </div>
                     </div>
                 </div>
