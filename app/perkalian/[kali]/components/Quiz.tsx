@@ -35,9 +35,11 @@ const Quiz = ({ kali }: any) => {
             sethasil("");
             setResult("");
             setIndex(index + 1);
-        }, 5000);
+        }, 10000);
         setIntervalId(_intervalId);
-        time();
+        setTimeout(() => {
+            time();
+        }, 500);
     }, [])
     const time = () => {
         if (intervalId) {
@@ -50,7 +52,7 @@ const Quiz = ({ kali }: any) => {
             sethasil("");
             setResult("");
             setIndex(index + 1);
-        }, 5000)
+        }, 10000)
         setIntervalId(_intervalId);
     }
     const currentItem = item[index];
@@ -73,7 +75,7 @@ const Quiz = ({ kali }: any) => {
             sethasil("");
             setResult("");
             setIndex(index + 1);
-        }, 500)
+        }, 2000)
 
         time()
     }
