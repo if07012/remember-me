@@ -28,6 +28,15 @@ const Quiz = ({ kali }: any) => {
         setItems(shuffledArray);
     }, [kali])
     useEffect(() => {
+        const _intervalId = setInterval(() => {
+            const items = [...item];
+            items[index].hasil = "Salah";
+            items[index].jawaban = "Kurang Cepat";
+            sethasil("");
+            setResult("");
+            setIndex(index + 1);
+        }, 5000);
+        setIntervalId(_intervalId);
         time();
     }, [])
     const time = () => {
