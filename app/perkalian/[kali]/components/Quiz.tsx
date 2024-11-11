@@ -27,34 +27,8 @@ const Quiz = ({ kali }: any) => {
         }
         setItems(shuffledArray);
     }, [kali])
-    useEffect(() => {
-        const _intervalId = setInterval(() => {
-            const items = [...item];
-            items[index].hasil = "Salah";
-            items[index].jawaban = "Kurang Cepat";
-            sethasil("");
-            setResult("");
-            setIndex(index + 1);
-        }, 10000);
-        setIntervalId(_intervalId);
-        setTimeout(() => {
-            time();
-        }, 500);
-    }, [])
-    const time = () => {
-        if (intervalId) {
-            clearInterval(intervalId)
-        }
-        const _intervalId = setInterval(() => {
-            const items = [...item];
-            items[index].hasil = "Salah";
-            items[index].jawaban = "Kurang Cepat";
-            sethasil("");
-            setResult("");
-            setIndex(index + 1);
-        }, 10000)
-        setIntervalId(_intervalId);
-    }
+  
+   
     const currentItem = item[index];
     const onSubmit = (result: string) => {
         if (parseInt(result) === currentItem.result) {
@@ -76,8 +50,6 @@ const Quiz = ({ kali }: any) => {
             setResult("");
             setIndex(index + 1);
         }, 2000)
-
-        time()
     }
     if (!currentItem)
         return <>
