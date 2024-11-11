@@ -55,7 +55,7 @@ const Quiz = ({ kali }: any) => {
         <>
             <div className="container mx-auto p-6">
                 <h1 className="text-5xl font-bold text-gray-900 text-center">
-                    Quiz Perkalian {kali}
+                    Quiz Perkalian {kali} {currentItem.hasil === "Salah" ? "Jawaban nya harus nya :" +  currentItem.jawaban : ""}
                 </h1>
                 <div className="container mx-auto p-6">
                     <div className="flex flex-col md:flex-row gap-6">
@@ -64,7 +64,7 @@ const Quiz = ({ kali }: any) => {
                                 if (!n.jawaban)
                                     return <></>
                                 return <div>
-                                    {n.b} X {n.a}  = {n.jawaban} ({n.hasil === "Salah" ? n.hasil + " jawaban nya " + n.result : n.hasil})
+                                    {n.b} X {n.a}  = {n.jawaban} ({n.hasil === "Salah" ? n.hasil : n.hasil})
                                 </div>
                             })}
                         </div>
