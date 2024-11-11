@@ -6,6 +6,7 @@ const Quiz = ({ kali }: any) => {
     const [result, setResult] = useState<string>("");
     const [hasil, sethasil] = useState<string>("");
     const [index, setIndex] = useState<number>(0);
+    const [intervalId, setIntervalId] = useState<any>(null);
     useEffect(() => {
         const items = []
         for (let j = 1; j <= 2; j++) {
@@ -26,6 +27,23 @@ const Quiz = ({ kali }: any) => {
         }
         setItems(shuffledArray);
     }, [kali])
+    useEffect(() => {
+        time();
+    }, [])
+    const time = () => {
+        if (intervalId) {
+            clearInterval(intervalId)
+        }
+        const _intervalId = setInterval(() => {
+            const items = [...item];
+            items[index].hasil = "Salah";
+            items[index].jawaban = "Kurang Cepat";
+            sethasil("");
+            setResult("");
+            setIndex(index + 1);
+        }, 5000)
+        setIntervalId(_intervalId);
+    }
     const currentItem = item[index];
     const onSubmit = (result: string) => {
         if (parseInt(result) === currentItem.result) {
@@ -47,6 +65,8 @@ const Quiz = ({ kali }: any) => {
             setResult("");
             setIndex(index + 1);
         }, 500)
+
+        time()
     }
     if (!currentItem)
         return <>
@@ -55,7 +75,10 @@ const Quiz = ({ kali }: any) => {
         <>
             <div className="container mx-auto p-6">
                 <h1 className="text-5xl font-bold text-gray-900 text-center">
-                    Quiz Perkalian {kali} {currentItem.hasil === "Salah" ? "Jawaban nya harus nya :" +  currentItem.jawaban : ""}
+                    Quiz Perkalian {kali}
+                </h1>
+                <h1 className="text-5xl font-bold text-gray-900 text-center">
+                    {currentItem.hasil === "Salah" ? "Jawaban nya harus nya :" + currentItem.result : ""}
                 </h1>
                 <div className="container mx-auto p-6">
                     <div className="flex flex-col md:flex-row gap-6">
