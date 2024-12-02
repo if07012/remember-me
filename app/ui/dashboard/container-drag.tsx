@@ -156,7 +156,7 @@ const intialBox: any = {
         { name: '12', type: "ayat" },
         { name: '13', type: "ayat" },
         { name: '14', type: "ayat" },
-        { name: '15', type: "ayat" },
+        { name: '15', type: "ayat" }
     ], "alfajr": [
         { name: '1', type: "ayat" },
         { name: '2', type: "ayat" },
@@ -188,7 +188,8 @@ const intialBox: any = {
         { name: '28', type: "ayat" },
         { name: '29', type: "ayat" },
         { name: '30', type: "ayat" }
-   
+    ]
+
 }
 export const Container: FC = memo(function Container(props: any) {
     const name = props.surat;
