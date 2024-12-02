@@ -190,7 +190,8 @@ const intialBox: any = {
         { name: '13', type: "ayat" },
         { name: '14', type: "ayat" },
         { name: '15', type: "ayat" }
-    ], "alfajr": [
+    ],
+    "alfajr": [
         { name: '1', type: "ayat" },
         { name: '2', type: "ayat" },
         { name: '3', type: "ayat" },
@@ -292,7 +293,7 @@ export const Container: FC = memo(function Container(props: any) {
 
     return (
         <div>
-            <BackgroundSound name={currentDrag} />
+            <BackgroundSound name={currentDrag} surat={surat}/>
             <div style={{ overflow: 'hidden', clear: 'both', marginTop: '30px' }}>
                 {[...dustbins].slice(0, ayat).map(({ accepts, lastDroppedItem }, index) => (
                     <Dustbin
