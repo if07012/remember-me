@@ -125,6 +125,7 @@ const initialState: any = {
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null }
     ]
 }
