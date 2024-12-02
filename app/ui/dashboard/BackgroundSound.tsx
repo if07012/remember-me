@@ -5,7 +5,7 @@ const BackgroundSound = (props: any) => {
         if (!props.name)
             return;
         // Create a new Audio object with the background sound file
-        const audio = new Audio(`/ayat/albalad/${props.name}.mp3`);
+        const audio = new Audio(`/ayat/alfajr/${props.name}.mp3`);
 
         // Set the audio to loop
         audio.loop = true;
