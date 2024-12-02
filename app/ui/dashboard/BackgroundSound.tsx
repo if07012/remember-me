@@ -4,7 +4,6 @@ const BackgroundSound = (props: any) => {
     useEffect(() => {
         if (!props.name)
             return;
-        debugger;
         // Create a new Audio object with the background sound file
         const audio = new Audio(`/ayat/albalad/${props.name}.mp3`);
 

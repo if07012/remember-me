@@ -157,7 +157,38 @@ const intialBox: any = {
         { name: '13', type: "ayat" },
         { name: '14', type: "ayat" },
         { name: '15', type: "ayat" },
-    ]
+    ], "alfajr": [
+        { name: '1', type: "ayat" },
+        { name: '2', type: "ayat" },
+        { name: '3', type: "ayat" },
+        { name: '4', type: "ayat" },
+        { name: '5', type: "ayat" },
+        { name: '6', type: "ayat" },
+        { name: '7', type: "ayat" },
+        { name: '8', type: "ayat" },
+        { name: '9', type: "ayat" },
+        { name: '10', type: "ayat" },
+        { name: '11', type: "ayat" },
+        { name: '12', type: "ayat" },
+        { name: '13', type: "ayat" },
+        { name: '14', type: "ayat" },
+        { name: '15', type: "ayat" },
+        { name: '16', type: "ayat" },
+        { name: '17', type: "ayat" },
+        { name: '18', type: "ayat" },
+        { name: '19', type: "ayat" },
+        { name: '20', type: "ayat" },
+        { name: '21', type: "ayat" },
+        { name: '22', type: "ayat" },
+        { name: '23', type: "ayat" },
+        { name: '24', type: "ayat" },
+        { name: '25', type: "ayat" },
+        { name: '26', type: "ayat" },
+        { name: '27', type: "ayat" },
+        { name: '28', type: "ayat" },
+        { name: '29', type: "ayat" },
+        { name: '30', type: "ayat" }
+   
 }
 export const Container: FC = memo(function Container(props: any) {
     const name = props.surat;
