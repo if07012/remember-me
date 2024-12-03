@@ -8,7 +8,7 @@ const BackgroundSound = (props: any) => {
         const audio = new Audio(`/ayat/${props.surat}/${props.name}.mp3`);
 
         // Set the audio to loop
-        audio.loop = true;
+        audio.loop = false;
 
         // Play the audio when the component mounts
         audio.play().catch(error => {
