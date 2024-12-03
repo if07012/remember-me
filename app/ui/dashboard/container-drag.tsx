@@ -233,7 +233,9 @@ export const Container: FC = memo(function Container(props: any) {
     const [isSubmit, setSubmit] = useState<boolean>(false);
     const [isPreview, setPreview] = useState<boolean>(false);
     const [randomBoxes, setRandomBoxes] = useState<BoxState[]>([]);
-
+    console.log("Surat : "+surat)
+    console.log("initialState : ",initialState)
+    console.log("initialState : ",initialState[surat])
     const [dustbins, setDustbins] = useState<DustbinState[]>([...initialState[surat]])
 
     const [boxes, setBox] = useState<BoxState[]>([...intialBox[surat]])
