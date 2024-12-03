@@ -78,7 +78,8 @@ const initialState: any = {
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
-    ], 'assham': [
+    ],
+    'assham': [
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
@@ -96,7 +97,6 @@ const initialState: any = {
         { accepts: ["ayat"], lastDroppedItem: null },
     ],
     'alfajr': [
-        { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
@@ -293,7 +293,7 @@ export const Container: FC = memo(function Container(props: any) {
 
     return (
         <div>
-            <BackgroundSound name={currentDrag} surat={surat}/>
+            <BackgroundSound name={currentDrag} surat={surat} />
             <div style={{ overflow: 'hidden', clear: 'both', marginTop: '30px' }}>
                 {[...dustbins].slice(0, ayat).map(({ accepts, lastDroppedItem }, index) => (
                     <Dustbin
