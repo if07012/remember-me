@@ -56,6 +56,11 @@ const Quiz = ({ kali }: any) => {
             items[index].jawaban = result;
             setItems([...items])
             sethasil("Jawaban benar");
+            setTimeout(() => {
+                sethasil("");
+                setResult("");
+                setIndex(index + 1);
+            }, 100)
         } else {
             const items = [...item];
             const now = new Date();
@@ -67,12 +72,13 @@ const Quiz = ({ kali }: any) => {
             setItems([...items])
             sethasil("Jawaban benar");
             sethasil("Jawaban Salah");
+            setTimeout(() => {
+                sethasil("");
+                setResult("");
+                setIndex(index + 1);
+            }, 1000)
         }
-        setTimeout(() => {
-            sethasil("");
-            setResult("");
-            setIndex(index + 1);
-        }, 1000)
+       
     }
     if (!currentItem)
         return <>
