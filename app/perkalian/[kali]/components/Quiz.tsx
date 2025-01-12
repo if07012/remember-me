@@ -78,10 +78,28 @@ const Quiz = ({ kali }: any) => {
                 setIndex(index + 1);
             }, 1000)
         }
-       
+
     }
     if (!currentItem)
         return <>
+            <div className="container mx-auto p-6">
+                <h1 className="text-5xl font-bold text-gray-900 text-center">
+                    Quiz Perkalian {kali}  DONE
+                </h1>
+                <div className="container mx-auto p-6">
+                    <div className="flex flex-col md:flex-row gap-6" >
+                        <div className="bg-blue-500 p-4 text-white rounded w-fit" style={{ minWidth: '300px' }}>
+                            {item.map((n: any, index: number) => {
+                                if (!n.jawaban)
+                                    return <></>
+                                return <div key={index}>
+                                    {n.b} X {n.a}  = {n.jawaban} ({n.hasil === "Salah" ? n.hasil : n.hasil}) at {JSON.stringify(n.submitDate)}
+                                </div>
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     return (
         <>
