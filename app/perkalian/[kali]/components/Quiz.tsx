@@ -6,7 +6,7 @@ const Quiz = ({ kali }: any) => {
     const [result, setResult] = useState<string>("");
     const [hasil, sethasil] = useState<string>("");
     const [index, setIndex] = useState<number>(0);
-    const [timeLeft, setTimeLeft] = useState(60); // Timer starts at 30 seconds
+    const [timeLeft, setTimeLeft] = useState(120); // Timer starts at 30 seconds
     const [isDisabled, setIsDisabled] = useState(false);
     useEffect(() => {
         if (timeLeft <= 0) {
