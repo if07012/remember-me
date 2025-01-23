@@ -9,16 +9,16 @@ const Quiz = ({ kali }: any) => {
     const [timeLeft, setTimeLeft] = useState(120); // Timer starts at 30 seconds
     const [isDisabled, setIsDisabled] = useState(false);
     useEffect(() => {
-        if (timeLeft <= 0) {
-            setIsDisabled(true); // Disable the button when timer finishes
-            return;
-        }
+        // if (timeLeft <= 0) {
+        //     setIsDisabled(true); // Disable the button when timer finishes
+        //     return;
+        // }
 
-        const timer = setInterval(() => {
-            setTimeLeft((prevTime) => prevTime - 1);
-        }, 1000);
+        // const timer = setInterval(() => {
+        //     setTimeLeft((prevTime) => prevTime - 1);
+        // }, 1000);
 
-        return () => clearInterval(timer); // Cleanup the timer on component unmount
+        // return () => clearInterval(timer); // Cleanup the timer on component unmount
     }, [timeLeft]);
     const [intervalId, setIntervalId] = useState<any>(null);
     useEffect(() => {
