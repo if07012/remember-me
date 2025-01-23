@@ -105,14 +105,14 @@ const Quiz = ({ kali }: any) => {
         <>
             <div className="container mx-auto p-6">
                 <h1 className="text-5xl font-bold text-gray-900 text-center">
-                    Quiz Perkalian {kali}  <p>Time left: {timeLeft} seconds</p>
+                    Quiz Perkalian {kali}
                 </h1>
                 <h1 className="text-5xl font-bold text-gray-900 text-center">
                     {currentItem.hasil === "Salah" ? "Jawaban nya harus nya :" + currentItem.result : ""}
                 </h1>
                 <div className="container mx-auto p-6">
                     <div className="flex flex-col md:flex-row gap-6" >
-                        <div className="bg-blue-500 p-4 text-white rounded w-fit" style={{ minWidth: '300px' }}>
+                        {index === 20 && <div className="bg-blue-500 p-4 text-white rounded w-fit" style={{ minWidth: '300px' }}>
                             {item.map((n: any, index: number) => {
                                 if (!n.jawaban)
                                     return <></>
@@ -120,7 +120,7 @@ const Quiz = ({ kali }: any) => {
                                     {n.b} X {n.a}  = {n.jawaban} ({n.hasil === "Salah" ? n.hasil : n.hasil}) at {JSON.stringify(n.submitDate)}
                                 </div>
                             })}
-                        </div>
+                        </div>}
                         <div className="bg-green-500 p-4 text-white rounded w-fit">
                             {index <= item.length &&
                                 <h1 className="text-5xl font-bold text-gray-900 flex items-center justify-center">
