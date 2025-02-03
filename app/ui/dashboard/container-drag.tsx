@@ -276,7 +276,7 @@ const intialBox: any = {
         { name: '23', type: "ayat" },
         { name: '24', type: "ayat" },
         { name: '25', type: "ayat" },
-        { name: '26', type: "ayat" }4
+        { name: '26', type: "ayat" }
     ]
 
 }
