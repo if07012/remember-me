@@ -127,6 +127,33 @@ const initialState: any = {
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null },
         { accepts: ["ayat"], lastDroppedItem: null }
+    ], 'alghashiyah': [
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null },
+        { accepts: ["ayat"], lastDroppedItem: null }
     ]
 }
 const intialBox: any = {
@@ -222,6 +249,34 @@ const intialBox: any = {
         { name: '28', type: "ayat" },
         { name: '29', type: "ayat" },
         { name: '30', type: "ayat" }
+    ],
+    "alghashiyah": [
+        { name: '1', type: "ayat" },
+        { name: '2', type: "ayat" },
+        { name: '3', type: "ayat" },
+        { name: '4', type: "ayat" },
+        { name: '5', type: "ayat" },
+        { name: '6', type: "ayat" },
+        { name: '7', type: "ayat" },
+        { name: '8', type: "ayat" },
+        { name: '9', type: "ayat" },
+        { name: '10', type: "ayat" },
+        { name: '11', type: "ayat" },
+        { name: '12', type: "ayat" },
+        { name: '13', type: "ayat" },
+        { name: '14', type: "ayat" },
+        { name: '15', type: "ayat" },
+        { name: '16', type: "ayat" },
+        { name: '17', type: "ayat" },
+        { name: '18', type: "ayat" },
+        { name: '19', type: "ayat" },
+        { name: '20', type: "ayat" },
+        { name: '21', type: "ayat" },
+        { name: '22', type: "ayat" },
+        { name: '23', type: "ayat" },
+        { name: '24', type: "ayat" },
+        { name: '25', type: "ayat" },
+        { name: '26', type: "ayat" }4
     ]
 
 }
@@ -233,9 +288,9 @@ export const Container: FC = memo(function Container(props: any) {
     const [isSubmit, setSubmit] = useState<boolean>(false);
     const [isPreview, setPreview] = useState<boolean>(false);
     const [randomBoxes, setRandomBoxes] = useState<BoxState[]>([]);
-    console.log("Surat : "+surat)
-    console.log("initialState : ",initialState)
-    console.log("initialState : ",initialState[surat])
+    console.log("Surat : " + surat)
+    console.log("initialState : ", initialState)
+    console.log("initialState : ", initialState[surat])
     const [dustbins, setDustbins] = useState<DustbinState[]>([...initialState[surat]])
 
     const [boxes, setBox] = useState<BoxState[]>([...intialBox[surat]])
