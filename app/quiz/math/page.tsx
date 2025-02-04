@@ -1,60 +1,59 @@
 "use client"
-import { useState } from "react";
-
-const questions = [
-    {
-        question: "What is 2 + 2?",
-        options: ["3", "4", "5", "6"],
-        answer: "4",
-    },
-    {
-        question: "What is 5 * 5?",
-        options: ["20", "25", "30", "35"],
-        answer: "25",
-    },
-];
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
-    const [answers, setAnswers] = useState<any>([]);
-    const handleAnswerSelect = (questionIndex: number, option: any) => {
-        setAnswers((prevAnswers: any) => ({
-            ...prevAnswers,
-            [questionIndex]: option,
-        }));
-    };
+    const [levels, setLevels] = useState<any[]>([]);
+    const router = useRouter();
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        const callApi = async () => {
+            const response = await fetch('https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet/all?group=Math',
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-functions-key': '1mfIulpMhjZ5agPydsogLoHLMGiv2Pgt'
+                    }
+                }
+            )
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json(); // Convert response to JSON
+            setLevels([...data]);
+            setLoading(false);
+        }
+        callApi()
+    }, [])
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <h1 className="text-2xl font-bold mb-6">Math Quiz</h1>
-            <div className="w-full max-w-2xl mx-auto space-y-6">
-                <h1 className="text-2xl font-bold text-center mb-6">Math Quiz</h1>
-                <form className="space-y-6">
-                    {questions.map((q, qIndex) => (
-                        <div key={qIndex} className="bg-white p-6 rounded-lg shadow-md">
-                            <h2 className="text-xl font-semibold mb-4">{q.question}</h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {q.options.map((option, oIndex) => (
-                                    <label
-                                        key={oIndex}
-                                        className={`block p-4 rounded-lg text-center cursor-pointer transition duration-300 ${answers[qIndex] === option
-                                            ? "bg-blue-100 border-2 border-blue-500"
-                                            : "bg-gray-50 hover:bg-blue-50"
-                                            }`}
-                                        onClick={() => handleAnswerSelect(qIndex, option)}
-                                    >
-                                        {option}
-                                    </label>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-300"
+        <div className="flex flex-col items-center justify-center gap-8 min-h-min">
+            <h1 className="text-6xl pt-10 font-bold mb-6">Math Quiz</h1>
+
+            <div className="flex flex-row flex-wrap gap-3 items-start justify-cente">
+                {loading && <>
+                    <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                    <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                    <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                    <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                </>}
+                {!loading && levels.map((n: any) => {
+                    return <label
+                        className={`block p-8 rounded-lg text-center cursor-pointer transition duration-300 ${n.isPass
+                            ? "bg-blue-100 border-2 border-blue-500"
+                            : "bg-gray-50 hover:bg-blue-50"
+                            }`}
+                        onClick={() => {
+                            router.push(`/quiz/math/${n.level.replace('Math-', '')}/learn`)
+                        }}
                     >
-                        Submit Quiz
-                    </button>
-                </form>
+                        <h2 className="text-4xl font-semibold"> {n.level}</h2>
+                    </label>
+                })}
             </div>
+
+
         </div>
     )
 }
