@@ -76,12 +76,12 @@ export default function Page({ params }: { params: { level: string } }) {
         if (start && remainingDuration == 0 && interval) {
             setDone(true)
             clearInterval(interval)
-            postData(questions.filter(n => n.currentAnswer), "Math", "Math-" + level, questions.filter(n => n.currentAnswer === n.correctAnswer).length >= minimumAnswer ? "Passes" : "Failed")
+            postData(questions.filter(n => n.currentAnswer), "English", "English-" + level, questions.filter(n => n.currentAnswer === n.correctAnswer).length >= minimumAnswer ? "Passes" : "Failed")
         }
     }, [start, remainingDuration]);
     useEffect(() => {
         const callApi = async () => {
-            let response = await fetch(`https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet?sheet=Math-${params.level}`,
+            let response = await fetch(`https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet?sheet=English-${params.level}`,
                 {
                     method: 'GET',
                     headers: {
@@ -103,11 +103,11 @@ export default function Page({ params }: { params: { level: string } }) {
                     }
                 }
             )
-            const configuration = (await response.json()).filter((n: any) => n.module === "Math")[0] ?? {};
+            const configuration = (await response.json()).filter((n: any) => n.module === "English")[0] ?? {};
             setDuration(configuration.duration);
             setMinimumAnswer(configuration.minimum)
             let result: any[] = [];
-            for (let i = 0; i <= 1; i++) {
+            for (let i = 0; i <= configuration.looping; i++) {
                 const arr = shuffleArray([...data.map((v: any) => {
                     return {
                         ...v
@@ -128,7 +128,7 @@ export default function Page({ params }: { params: { level: string } }) {
     }, [])
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <h1 className="text-6xl font-bold mb-6">Test Math - {level}</h1>
+            <h1 className="text-6xl font-bold mb-6">Test English - {level}</h1>
             {!isDone && <>
                 {!loading && <h1 className="text-2xl font-bold mb-6">Please do the best in {duration} seconds, minimun Correct Answer is {minimumAnswer} </h1>}
                 {duration > 0 && start && <h1 className="text-2xl font-bold mb-6">{formatTime(remainingDuration)} </h1>}
@@ -268,7 +268,7 @@ export default function Page({ params }: { params: { level: string } }) {
                         type="submit"
                         className="w-full mt-16 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300"
                         onClick={() => {
-                            window.location.href = (`/quiz/math`)
+                            window.location.href = (`/quiz/English`)
                         }}
                     >
                         <h2 className="text-4xl font-semibold mb-4">Back </h2>
