@@ -107,7 +107,7 @@ export default function Page({ params }: { params: { level: string } }) {
             setDuration(configuration.duration);
             setMinimumAnswer(configuration.minimum)
             let result: any[] = [];
-            for (let i = 0; i <= 1; i++) {
+            for (let i = 0; i <= configuration.looping;i++) {
                 const arr = shuffleArray([...data.map((v: any) => {
                     return {
                         ...v
