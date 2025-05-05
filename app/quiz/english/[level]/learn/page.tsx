@@ -32,39 +32,39 @@ export default function Page({ params }: { params: { level: string } }) {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <h1 className="text-6xl font-bold mb-6">Remember English - {level}</h1>
             <div className="w-full">
-                <form className="grid grid-cols-2 gap-4">
+                <form className="grid grid-cols-2 gap-2">
                     {loading && <>
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
-                                <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="block p-6 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                                <div className="block p-6 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
                             </div>
                         </div>
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
-                                <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="block p-6 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                                <div className="block p-6 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
                             </div>
                         </div>
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
-                                <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="block p-6 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                                <div className="block p-6 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
                             </div>
                         </div>
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
-                                <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="block p-6 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
+                                <div className="block p-6 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
                             </div>
                         </div>
                     </>}
                     {!loading && questions.map(m => {
                         return <div className="bg-white p-6 rounded-lg shadow-md">
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-2">
                                 <label
-                                    className={`block p-4 rounded-lg text-center cursor-pointer transition duration-300 ${false
+                                    className={`block p-1 rounded-lg text-center cursor-pointer transition duration-300 ${false
                                         ? "bg-blue-100 border-2 border-blue-500"
                                         : "bg-gray-50 hover:bg-blue-50"
                                         }`}
@@ -75,7 +75,7 @@ export default function Page({ params }: { params: { level: string } }) {
                                     <h2 className="text-4xl font-semibold mb-4">{m.questions} </h2>
                                 </label>
                                 <label
-                                    className={`block p-4 rounded-lg text-center cursor-pointer transition duration-300 ${true
+                                    className={`block p-1 rounded-lg text-center cursor-pointer transition duration-300 ${true
                                         ? "bg-blue-100 border-2 border-blue-500"
                                         : "bg-gray-50 hover:bg-blue-50"
                                         }`}
@@ -91,7 +91,7 @@ export default function Page({ params }: { params: { level: string } }) {
 
                 </form>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2">
                 <button
                     type="submit"
                     className="w-full mt-16 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300"

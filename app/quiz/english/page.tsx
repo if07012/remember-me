@@ -41,7 +41,7 @@ export default function Page() {
                 {!loading && levels.map((n: any) => {
                     return <label
                         className={`block p-8 rounded-lg text-center cursor-pointer transition duration-300 ${n.isPass
-                            ? "bg-blue-100 border-2 border-blue-500"
+                            ? "bg-green-800 border-2 border-green-500 text-white"
                             : "bg-gray-50 hover:bg-blue-50"
                             }`}
                         onClick={() => {

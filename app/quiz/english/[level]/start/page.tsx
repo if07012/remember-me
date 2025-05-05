@@ -45,16 +45,24 @@ export default function Page({ params }: { params: { level: string } }) {
     const [index, setIndex] = useState<number>(0);
     const [loading, setLoading] = useState(true);
     const [isDone, setDone] = useState(false);
-    const router = useRouter();
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
-    const [minimumAnswer, setMinimumAnswer] = useState(0);
-    const [remainingDuration, setRemainingDuration] = useState(0);
     useEffect(() => {
-        if (start) {
-            setRemainingDuration(duration)
+        if (index >= questions.length) {
+            setDone(true);
+            setStart(false);
+            const isPass = report.precentage >= 95 ? "true" : "false";
+            postData({
+                ...report,
+                level: level,
+                duration: duration,
+                type: "English",
+                module: `English-${level}`
+            }, "English", `English-${level}`, isPass)
+        } else {
+            setProgress(((index + 1) / questions.length) * 100);
         }
-    }, [start])
+    }, [index, questions, report, duration])
     useEffect(() => {
         if (questions.length > 0) {
             setReport({
@@ -65,20 +73,7 @@ export default function Page({ params }: { params: { level: string } }) {
             });
         }
     }, [questions])
-    useEffect(() => {
-        if (start && remainingDuration > 0) {
-            interval = setInterval(() => {
-                setRemainingDuration(remainingDuration - 1)
-            }, 1000);
 
-            return () => clearInterval(interval);
-        }
-        if (start && remainingDuration == 0 && interval) {
-            setDone(true)
-            clearInterval(interval)
-            postData(questions.filter(n => n.currentAnswer), "English", "English-" + level, questions.filter(n => n.currentAnswer === n.correctAnswer).length >= minimumAnswer ? "Passes" : "Failed")
-        }
-    }, [start, remainingDuration]);
     useEffect(() => {
         const callApi = async () => {
             let response = await fetch(`https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet?sheet=English-${params.level}`,
@@ -105,9 +100,8 @@ export default function Page({ params }: { params: { level: string } }) {
             )
             const configuration = (await response.json()).filter((n: any) => n.module === "English")[0] ?? {};
             setDuration(configuration.duration);
-            setMinimumAnswer(configuration.minimum)
             let result: any[] = [];
-            for (let i = 0; i <= configuration.looping; i++) {
+            for (let i = 0; i <= 4; i++) {
                 const arr = shuffleArray([...data.map((v: any) => {
                     return {
                         ...v
@@ -125,13 +119,12 @@ export default function Page({ params }: { params: { level: string } }) {
             setLoading(false);
         }
         callApi()
+        setDone(false);
     }, [])
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <h1 className="text-6xl font-bold mb-6">Test English - {level}</h1>
             {!isDone && <>
-                {!loading && <h1 className="text-2xl font-bold mb-6">Please do the best in {duration} seconds, minimun Correct Answer is {minimumAnswer} </h1>}
-                {duration > 0 && start && <h1 className="text-2xl font-bold mb-6">{formatTime(remainingDuration)} </h1>}
                 <div className="w-full">
                     <form className="grid grid-cols-1 gap-4">
                         {loading && <>
@@ -268,7 +261,7 @@ export default function Page({ params }: { params: { level: string } }) {
                         type="submit"
                         className="w-full mt-16 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300"
                         onClick={() => {
-                            window.location.href = (`/quiz/English/learn`)
+                            window.location.href = (`/quiz/english`)
                         }}
                     >
                         <h2 className="text-4xl font-semibold mb-4">Back </h2>
