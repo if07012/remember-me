@@ -96,7 +96,7 @@ export default function Page({ params }: { params: { level: string } }) {
                     type="submit"
                     className="w-full mt-16 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300"
                     onClick={() => {
-                        router.push(`/quiz/math`)
+                        router.push(`/quiz/english`)
                     }}
                 >
                     <h2 className="text-4xl font-semibold mb-4">Back </h2>

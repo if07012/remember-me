@@ -45,7 +45,10 @@ export default function Page() {
                             : "bg-gray-50 hover:bg-blue-50"
                             }`}
                         onClick={() => {
-                            router.push(`/quiz/english/${n.level.replace('English-', '')}/learn`)
+                            if (n.level.replace('English-', '') === "QUIZ")
+                                router.push(`/quiz/english/${n.level.replace('English-', '')}/start`)
+                            else
+                                router.push(`/quiz/english/${n.level.replace('English-', '')}/learn`)
                         }}
                     >
                         <h2 className="text-4xl font-semibold"> {n.level}</h2>

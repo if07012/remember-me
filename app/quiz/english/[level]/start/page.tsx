@@ -101,7 +101,12 @@ export default function Page({ params }: { params: { level: string } }) {
             const configuration = (await response.json()).filter((n: any) => n.module === "English")[0] ?? {};
             setDuration(configuration.duration);
             let result: any[] = [];
-            for (let i = 0; i <= 4; i++) {
+            let limit = 0;
+            if (level.replace('English-', '') === "QUIZ")
+                limit = 0;
+            else
+                limit = 4;
+            for (let i = 0; i <= limit; i++) {
                 const arr = shuffleArray([...data.map((v: any) => {
                     return {
                         ...v
