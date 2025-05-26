@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 
-export default function Page({ params }: { params: { level: string } }) {
+export default async function Page({ params }: { params: Promise<{ level: string }> }) {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">

@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 
-export default function Page({ params }: { params: { level: string } }) {
-    const level = params.level;
+export default async function Page({ params }: { params: Promise<{ level: string }> }) {
+    const { level } = await params
     const [questions, setQuestions] = useState<any[]>([]);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const callApi = async () => {
-            const response = await fetch(`https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet?sheet=English-${params.level}`,
+            const response = await fetch(`https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet?sheet=English-${level}`,
                 {
                     method: 'GET',
                     headers: {

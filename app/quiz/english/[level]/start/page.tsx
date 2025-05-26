@@ -37,8 +37,8 @@ async function postData(body: any, type: string, module: string, isPass: string)
     }
 }
 
-export default function Page({ params }: { params: { level: string } }) {
-    const level = params.level;
+export default async function Page({ params }: { params: Promise<   { level: string }> }) {
+    const { level } = await params
     const [questions, setQuestions] = useState<any[]>([]);
     const [report, setReport] = useState<any>({});
     const [start, setStart] = useState<boolean>(false);
@@ -76,7 +76,7 @@ export default function Page({ params }: { params: { level: string } }) {
 
     useEffect(() => {
         const callApi = async () => {
-            let response = await fetch(`https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet?sheet=English-${params.level}`,
+            let response = await fetch(`https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet?sheet=English-${level}`,
                 {
                     method: 'GET',
                     headers: {

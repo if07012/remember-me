@@ -14,8 +14,8 @@ const questions = [
     },
 ];
 
-export default function Page({ params }: { params: { level: string } }) {
-    const level = params.level;
+export default async function Page({ params }: { params: Promise<   { level: string }> }) {
+    const { level } = await params
     const [answers, setAnswers] = useState<any>([]);
     const [index, setIndex] = useState(0);
     const handleAnswerSelect = (questionIndex: number, option: any) => {

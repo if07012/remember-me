@@ -1,8 +1,8 @@
 import Perkalian from "./components/Perkalian";
 
 
-export default async function Page({ params }: { params: { kali: string } }) {
-    const kali = params.kali;
+export default async function Page({ params }: { params: Promise<{ kali: string }> }) {
+    const kali = await params
 
     return (
         <>
