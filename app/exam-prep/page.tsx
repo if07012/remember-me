@@ -2,11 +2,14 @@ import Link from 'next/link';
 
 export default function ExamPrepPage() {
   const categories = [
-    { id: 'math', name: 'Mathematics', icon: '➕', color: 'blue' },
-    { id: 'english', name: 'English', icon: '📚', color: 'green' },
-    { id: 'science', name: 'Science', icon: '🔬', color: 'purple' },
-    { id: 'history', name: 'History', icon: '📜', color: 'amber' },
-    { id: 'religion', name: 'Religion', icon: '🕍', color: 'red' },
+    { id: 'pancasila', name: 'Pendidikan Pancasila', icon: '🏛️', color: 'red' },
+    { id: 'islam', name: 'Pendidikan Agama Islam', icon: '🕌', color: 'green' },
+    { id: 'matematika', name: 'Matematika', icon: '➗', color: 'blue' },
+    { id: 'english', name: 'English', icon: '📚', color: 'purple' },
+    { id: 'math-english', name: 'Math in English', icon: '🔢', color: 'indigo' },
+    { id: 'science-english', name: 'Science in English', icon: '🔬', color: 'teal' },
+    { id: 'bahasa', name: 'Bahasa Indonesia', icon: '📖', color: 'amber' },
+    { id: 'ips-ipa', name: 'Ilmu Pengetahuan Alam dan Sosial', icon: '🌍', color: 'cyan' },
   ];
 
   return (

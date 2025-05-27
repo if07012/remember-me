@@ -1,3 +1,4 @@
+import { readSheetData } from '@/app/lib/googleSheets';
 import { NextResponse } from 'next/server';
 
 const GROQ_API_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
@@ -20,7 +21,7 @@ function extractJsonFromMarkdown(markdown: string): any {
   // Look for JSON in code blocks
   const codeBlockRegex = /```(?:json)?\s*\n?([\s\S]*?)\n?```/;
   const match = markdown.match(codeBlockRegex);
-  
+
   if (match && match[1]) {
     try {
       return JSON.parse(match[1].trim());
@@ -59,62 +60,75 @@ export async function GET(request: Request) {
   }
 
   try {
+    const responses: any[] = [];
+    const request = {
+      messages: [{
+        role: 'system',
+        content: `You are a highly reliable exam question generator for third grade elementary school students. 
+Ensure questions test understanding rather than just memorization.
+Make explanations detailed and educational.
+`
+      }],
+      model: 'deepseek-r1-distill-llama-70b',
+      temperature: 0.5,
+      max_tokens: 4096,
+      top_p: 0.9,
+      stream: false
+    }
+    const data = await readSheetData("1aRb4SWY4gBSoHhxNiEC6zCApNV9ffaWMoBgTTFb-hvE", category || undefined);
+    let contentUser = '';
+    let language = 'Indonesia';
+    let index = 1;
+    for (const item of data) {
+      contentUser += `\n Material ${index} : ${item.materi}
+          Action For Material ${index} ${item.userPrompt}
+      `;
+      language = item.bahasa;
+      index++;
+    }
+    contentUser += `
+        Format the response as a JSON array of questions where each question follows this structure:
+          For multiple choice:
+          {
+          "type": "multiple_choice",
+          "question": "question text",
+          "options": ["option1", "option2", "option3", "option4"],
+          "correctAnswer": 0-3,
+          "explanation": "detailed explanation",
+          "wrongAnswerExplanations": ["why option1 is wrong", "", "why option3 is wrong", "why option4 is wrong"],
+          "language": "${language}"
+          }
+          For fill in the blank:
+          {
+          "type": "fill_blank",
+          "question": "question text with ___ for blank",
+          "correctAnswer": "correct answer",
+          "explanation": "detailed explanation",
+          "caseSensitive": boolean,
+          "acceptableAnswers": ["answer1", "answer2"],
+          "language": "${language}"
+          }
+          Ensure all responses are in valid JSON format.
+          and for the wrongAnswerExplanations and explanation please provide in "Bahasa Indonesia"
+          but for the question and answer please provide in "Indonesia"`
+    request.messages.push({
+      role: 'user',
+      content: contentUser
+    });
+    console.log(contentUser);
+
     const response = await fetch(GROQ_API_ENDPOINT, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        messages: [
-          {
-            role: 'system',
-            content: `You are a highly reliable exam question generator for third grade elementary school students. Generate 5 challenging but fair questions for the ${category} category. 
-            Include a mix of multiple choice and fill-in-the-blank questions.
-            Ensure questions test understanding rather than just memorization.
-            Make explanations detailed and educational.
-            
-            Format the response as a JSON array of questions where each question follows this structure:
-            For multiple choice:
-            {
-              "type": "multiple_choice",
-              "question": "question text",
-              "options": ["option1", "option2", "option3", "option4"],
-              "correctAnswer": 0-3,
-              "explanation": "detailed explanation",
-              "wrongAnswerExplanations": ["why option1 is wrong", "", "why option3 is wrong", "why option4 is wrong"],
-              "language": "${language}"
-            }
-            
-            For fill in the blank:
-            {
-              "type": "fill_blank",
-              "question": "question text with ___ for blank",
-              "correctAnswer": "correct answer",
-              "explanation": "detailed explanation",
-              "caseSensitive": boolean,
-              "acceptableAnswers": ["answer1", "answer2"],
-              "language": "${language}"
-            }
-            
-            Ensure all responses are in valid JSON format.
-            and for the wrongAnswerExplanations and explanation please provide in "Bahasa Indonesia"
-            but for the question and answer please provide in "${language}"
-           `
-          }
-        ],
-        model: 'deepseek-r1-distill-llama-70b',
-        temperature: 0.5,
-        max_tokens: 4096,
-        top_p: 0.9,
-        stream: false
-      })
+      body: JSON.stringify(request)
     });
-
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
       console.error('Groq API error:', errorData);
-      throw new Error(`Groq API returned ${response.status}`);
+      throw new Error('Groq API error');
     }
 
     const completion = await response.json();
@@ -126,12 +140,18 @@ export async function GET(request: Request) {
 
     try {
       // Extract JSON from possible markdown response
-      const questions = extractJsonFromMarkdown(content);
+      let json = extractJsonFromMarkdown(content);
 
-      if (!Array.isArray(questions)) {
-        throw new Error('Response is not an array');
+
+      const questions: any[] = [];
+      if (questions.length > 0) {
+        for (const question of json) {
+          questions.push(question);
+        }
       }
-
+      else {
+        questions.push(json);
+      }
       questions.forEach((question, index) => {
         if (!question.type || !question.question || !question.explanation) {
           throw new Error(`Question ${index + 1} is missing required fields`);
@@ -143,12 +163,14 @@ export async function GET(request: Request) {
           throw new Error(`Fill in the blank question ${index + 1} is missing required fields`);
         }
       });
-
-      return NextResponse.json(questions);
+      for (const question of questions) {
+        responses.push(question);
+      }
     } catch (e) {
+
       console.error('Failed to parse or validate Groq response:', content);
-      throw new Error('Invalid response format from Groq API');
     }
+    return NextResponse.json(responses);
   } catch (error) {
     console.error('Error fetching questions:', error);
     return NextResponse.json(
