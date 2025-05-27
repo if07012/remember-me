@@ -23,11 +23,11 @@ export async function readSheetData(spreadsheetId: string, sheetName?: string) {
   try {
     const doc = await getGoogleSheet(spreadsheetId);
     const sheet = sheetName ? doc.sheetsByTitle[sheetName] : doc.sheetsByIndex[0];
-    
+
     if (!sheet) {
       throw new Error(sheetName ? `Sheet "${sheetName}" not found` : 'No sheets found in the document');
     }
-    
+
     const rows = await sheet.getRows();
     return rows.map(row => row.toObject());
   } catch (error) {
@@ -39,11 +39,11 @@ export async function readSheetData(spreadsheetId: string, sheetName?: string) {
 export async function appendSheetData(
   spreadsheetId: string,
   data: Record<string, any>[],
-  sheetIndex = 0
+  sheetName?: string
 ) {
   try {
     const doc = await getGoogleSheet(spreadsheetId);
-    const sheet = doc.sheetsByIndex[sheetIndex];
+    const sheet = sheetName ? doc.sheetsByTitle[sheetName] : doc.sheetsByIndex[0];
     await sheet.addRows(data);
     return { success: true, message: 'Data added successfully' };
   } catch (error) {
@@ -62,7 +62,7 @@ export async function updateSheetData(
     const doc = await getGoogleSheet(spreadsheetId);
     const sheet = doc.sheetsByIndex[sheetIndex];
     const rows = await sheet.getRows();
-    
+
     if (rowIndex >= rows.length) {
       throw new Error('Row index out of bounds');
     }
@@ -72,7 +72,7 @@ export async function updateSheetData(
       row[key] = value;
     });
     await row.save();
-    
+
     return { success: true, message: 'Row updated successfully' };
   } catch (error) {
     console.error('Error updating Google Sheet:', error);

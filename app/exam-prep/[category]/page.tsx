@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
 interface BaseQuestion {
   id: number;
@@ -107,6 +108,9 @@ export default function ExamPrepCategory() {
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-3xl font-bold mb-4">Error</h1>
           <p className="text-red-500">{error}</p>
+          <Link href="/exam-prep" className="mt-4 inline-block text-blue-500 hover:underline">
+            Back to Categories
+          </Link>
         </div>
       </div>
     );
@@ -117,7 +121,10 @@ export default function ExamPrepCategory() {
       <div className="min-h-screen p-6">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-3xl font-bold mb-4">No questions available</h1>
-          <p>Please check back later for questions in this category.</p>
+          <p className="mb-4">Please check back later for questions in this category.</p>
+          <Link href="/exam-prep" className="text-blue-500 hover:underline">
+            Back to Categories
+          </Link>
         </div>
       </div>
     );
@@ -130,14 +137,22 @@ export default function ExamPrepCategory() {
           <h1 className="text-3xl font-bold capitalize">
             {category} Exam Preparation
           </h1>
-          <select
-            value={selectedLanguage}
-            onChange={(e) => setSelectedLanguage(e.target.value as 'English' | 'Indonesia')}
-            className="w-40 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
-          >
-            <option value="English">English</option>
-            <option value="Indonesia">Indonesia</option>
-          </select>
+          <div className="flex items-center gap-4">
+            <select
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value as 'English' | 'Indonesia')}
+              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+            >
+              <option value="English">English</option>
+              <option value="Indonesia">Indonesia</option>
+            </select>
+            <Link
+              href="/exam-prep"
+              className="text-blue-500 hover:underline"
+            >
+              Back to Categories
+            </Link>
+          </div>
         </div>
         
         <div className="bg-white rounded-lg shadow-md p-6">
