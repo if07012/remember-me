@@ -8,6 +8,7 @@ interface Material {
   materi: string;
   tipe: 'multiple_choice' | 'fill_blank';
   userPrompt: string;
+  bahasa: string;
 }
 
 interface Question {
@@ -204,6 +205,7 @@ export default function MaterialsList() {
           category,
           material: material.materi,
           userPrompt: material.userPrompt,
+          language: material.bahasa,
         }),
       });
 

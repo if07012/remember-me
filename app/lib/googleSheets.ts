@@ -22,10 +22,10 @@ export async function getGoogleSheet(spreadsheetId: string) {
 export async function readSheetData(spreadsheetId: string, sheetName?: string) {
   try {
     const doc = await getGoogleSheet(spreadsheetId);
-    const sheet = sheetName ? doc.sheetsByTitle[sheetName] : doc.sheetsByIndex[0];
+    let sheet = sheetName ? doc.sheetsByTitle[sheetName] : doc.sheetsByIndex[0];
 
     if (!sheet) {
-      throw new Error(sheetName ? `Sheet "${sheetName}" not found` : 'No sheets found in the document');
+      sheet = await doc.addSheet({ title: sheetName });
     }
 
     const rows = await sheet.getRows();

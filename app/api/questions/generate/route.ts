@@ -46,7 +46,8 @@ export async function POST(request: Request) {
     }
 
     try {
-        const { category, material, userPrompt } = await request.json();
+        const { category, material, userPrompt, language } = await request.json();
+        const currentLanguage = language || "Indonesia";
 
         if (!category || !material) {
             return NextResponse.json({ error: 'Category and material are required' }, { status: 400 });
@@ -77,7 +78,15 @@ For multiple choice:
   "correctAnswer": 0-3,
   "explanation": "detailed explanation",
   "wrongAnswerExplanations": ["why option1 is wrong", "", "why option3 is wrong", "why option4 is wrong"],
-  "language": "Indonesia"
+  "language": "${currentLanguage}",
+  "translation": [
+    {
+      "fromLanguage": "${currentLanguage}",
+      "toLanguage": "Indonesia",
+      "word": "extract every word from question",
+      "translation": "translation",
+    }
+  ]
 }
 
 For fill in the blank:
@@ -88,12 +97,20 @@ For fill in the blank:
   "explanation": "detailed explanation",
   "caseSensitive": boolean,
   "acceptableAnswers": ["answer1", "answer2"],
-  "language": "Indonesia"
+  "language": "${currentLanguage}",
+  "translation": [
+    {
+      "fromLanguage": "${currentLanguage}",
+      "toLanguage": "Indonesia",
+      "word": "extract every word from question",
+      "translation": "translation",
+    }
+  ]
 }
 ${userPrompt}
 Ensure all responses are in valid JSON format.
 For the wrongAnswerExplanations and explanation please provide in "Bahasa Indonesia"
-but for the question and answer please provide in "Indonesia"`
+but for the question and answer please provide in "${currentLanguage}"`
                 }
             ],
             model: 'deepseek-r1-distill-llama-70b',

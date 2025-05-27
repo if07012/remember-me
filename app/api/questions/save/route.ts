@@ -10,6 +10,7 @@ export async function POST(request: Request) {
         }
         question.options = JSON.stringify(question.options);
         question.wrongAnswerExplanations = JSON.stringify(question.wrongAnswerExplanations);
+        question.translation = JSON.stringify(question.translation);
         // Format questions for the sheet
         const sheetData = [question]
 
@@ -23,6 +24,7 @@ export async function POST(request: Request) {
         if (!sheet) {
             // If sheet doesn't exist, create it
             sheet = await doc.addSheet({ title: sheetName });
+            await sheet.setHeaderRow(['type', 'question', 'options', 'correctAnswer', 'explanation', 'wrongAnswerExplanations', 'language', 'translation']);
         }
 
         // Save to Google Sheets in the category-exam sheet

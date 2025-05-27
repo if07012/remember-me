@@ -28,6 +28,12 @@ interface FillBlankQuestion extends BaseQuestion {
 
 type Question = MultipleChoiceQuestion | FillBlankQuestion;
 
+interface Answer {
+  questionId: number;
+  userAnswer: string | number;
+  isCorrect: boolean;
+}
+
 export default function ExamPrepCategory() {
   const params = useParams();
   const category = params.category as string;
@@ -40,6 +46,9 @@ export default function ExamPrepCategory() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState<'English' | 'Indonesia'>('Indonesia');
+  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -65,7 +74,16 @@ export default function ExamPrepCategory() {
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswer(answerIndex);
     setShowExplanation(true);
-    setIsCorrect(answerIndex === (currentQuestion as MultipleChoiceQuestion).correctAnswer);
+    const correct = answerIndex === (currentQuestion as MultipleChoiceQuestion).correctAnswer;
+    setIsCorrect(correct);
+    
+    // Store the answer
+    const answer: Answer = {
+      questionId: currentQuestion.id,
+      userAnswer: answerIndex,
+      isCorrect: correct
+    };
+    setAnswers([...answers, answer]);
   };
 
   const handleFillBlankSubmit = () => {
@@ -79,6 +97,45 @@ export default function ExamPrepCategory() {
     const correct = normalizedAcceptableAnswers.includes(userAnswer);
     setIsCorrect(correct);
     setShowExplanation(true);
+
+    // Store the answer
+    const answer: Answer = {
+      questionId: question.id,
+      userAnswer: fillBlankAnswer,
+      isCorrect: correct
+    };
+    setAnswers([...answers, answer  ]);
+  };
+
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/questions/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          category,
+          answers,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit answers');
+      }
+
+      const result = await response.json();
+      setSubmitted(true);
+      // You can show a success message or summary here
+      alert(`Submission successful! You got ${result.summary.correctAnswers} out of ${result.summary.totalQuestions} questions correct.`);
+    } catch (err) {
+      alert('Failed to submit answers. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleNextQuestion = () => {
@@ -239,6 +296,32 @@ export default function ExamPrepCategory() {
             >
               Next Question
             </button>
+          )}
+
+          {/* Add submit button at the end */}
+          {currentQuestionIndex === questions.length - 1 && showExplanation && !submitted && (
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className={`mt-6 w-full py-2 px-4 rounded-lg transition duration-200 ${
+                isSubmitting 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-green-500 hover:bg-green-600 text-white'
+              }`}
+            >
+              {isSubmitting ? 'Submitting...' : 'Submit All Answers'}
+            </button>
+          )}
+
+          {/* Show summary after submission */}
+          {submitted && (
+            <div className="mt-6 p-4 bg-green-50 rounded-lg">
+              <h3 className="font-semibold text-green-700 mb-2">Submission Complete!</h3>
+              <p>Your answers have been recorded. You can review them later.</p>
+              <Link href="/exam-prep" className="mt-4 inline-block text-blue-500 hover:underline">
+                Back to Categories
+              </Link>
+            </div>
           )}
         </div>
       </div>
