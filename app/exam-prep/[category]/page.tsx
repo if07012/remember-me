@@ -103,7 +103,7 @@ export default function ExamPrepCategory() {
       ? acceptableAnswers 
       : acceptableAnswers.map(answer => answer.toLowerCase());
     
-    const correct = normalizedAcceptableAnswers.includes(userAnswer);
+    const correct = normalizedAcceptableAnswers.includes(userAnswer.trim());
     setIsCorrect(correct);
     setShowExplanation(true);
 
