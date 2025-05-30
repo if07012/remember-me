@@ -34,7 +34,13 @@ interface Answer {
   isCorrect: boolean;
   question: Question;
 }
-
+function shuffleArray(array: any[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)); // Random index
+      [array[i], array[j]] = [array[j], array[i]];  // Swap elements
+  }
+  return array;
+}
 export default function ExamPrepCategory() {
   const params = useParams();
   const category = params.category as string;
@@ -59,7 +65,7 @@ export default function ExamPrepCategory() {
           throw new Error('Failed to fetch questions');
         }
         const data = await response.json();
-        setQuestions(data);
+        setQuestions(shuffleArray(data));
         setIsLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
