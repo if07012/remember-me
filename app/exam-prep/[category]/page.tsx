@@ -292,7 +292,7 @@ export default function ExamPrepCategory() {
                   <p>The correct answer is: "{(currentQuestion as FillBlankQuestion).correctAnswer}"</p>
                 </div>
               )}
-             {isCorrect  && <div className="p-3 bg-green-50 rounded">
+             {selectedAnswer !== null  && <div className="p-3 bg-green-50 rounded">
                 <p className="text-green-700 font-medium">Explanation:</p>
                 <p>{currentQuestion.explanation}</p>
               </div>}
