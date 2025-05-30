@@ -106,6 +106,7 @@ export default function ExamPrepCategory() {
       questionId: question.id,
       userAnswer: fillBlankAnswer,
       isCorrect: correct,
+      question: question
     };
     setAnswers([...answers, answer  ]);
   };
