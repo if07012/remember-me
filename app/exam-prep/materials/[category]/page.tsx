@@ -15,7 +15,7 @@ interface Question {
   type: 'multiple_choice' | 'fill_blank';
   question: string;
   explanation: string;
-  options?: string[];
+  options?: any[];
   correctAnswer: string | number;
   wrongAnswerExplanations?: string[];
 }
@@ -55,18 +55,58 @@ const PreviewModal = ({
   isSaving: boolean
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentQuestion = questions[currentIndex];
+  const [editedQuestions, setEditedQuestions] = useState<Question[]>(questions);
+  const [isEditing, setIsEditing] = useState(false);
+  const currentQuestion = editedQuestions[currentIndex];
+
+  const handleEdit = (field: string, value: string | number) => {
+    const updatedQuestions = [...editedQuestions];
+    const updatedQuestion = { ...updatedQuestions[currentIndex] };
+    
+    if (field === 'correctAnswer') {
+      updatedQuestion.correctAnswer = value;
+    } else if (field === 'explanation') {
+      updatedQuestion.explanation = value as string;
+    } else if (field.startsWith('option_')) {
+      const optionIndex = parseInt(field.split('_')[1]);
+      if (updatedQuestion.type === 'multiple_choice' && updatedQuestion.options) {
+        updatedQuestion.options[optionIndex] = {
+          ...updatedQuestion.options[optionIndex],
+          option: value,
+        };
+      }
+    } else if (field.startsWith('explanation_')) {
+      const optionIndex = parseInt(field.split('_')[1]);
+      if (updatedQuestion.type === 'multiple_choice' && updatedQuestion.options) {
+        updatedQuestion.options[optionIndex] = {
+          ...updatedQuestion.options[optionIndex],
+          explanation: value,
+        };
+      }
+    }
+    
+    updatedQuestions[currentIndex] = updatedQuestion;
+    setEditedQuestions(updatedQuestions);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-3xl w-full max-h-[80vh] overflow-y-auto p-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold">Preview Questions</h3>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsEditing(!isEditing)}
+              className="text-blue-500 hover:text-blue-700"
+            >
+              {isEditing ? 'Preview Mode' : 'Edit Mode'}
+            </button>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div className="mb-4">
@@ -78,19 +118,75 @@ const PreviewModal = ({
             <h4 className="font-semibold mb-4">{currentQuestion.question}</h4>
             
             {currentQuestion.type === 'multiple_choice' && (
-              <div className="space-y-2">
+              <div className="space-y-4">
                 {currentQuestion.options?.map((option, idx) => (
-                  <div
-                    key={idx}
-                    className={`p-3 rounded-lg border ${
-                      idx === Number(currentQuestion.correctAnswer)
-                        ? 'border-green-500 bg-green-50'
-                        : 'border-gray-200 hover:bg-gray-50'
-                    }`}
-                  >
-                    {option}
-                    {idx === Number(currentQuestion.correctAnswer) && (
-                      <span className="ml-2 text-green-600">✓</span>
+                  <div key={idx}>
+                    <div
+                      className={`p-3 rounded-lg border ${
+                        idx === Number(currentQuestion.correctAnswer)
+                          ? 'border-green-500 bg-green-50'
+                          : 'border-gray-200 hover:bg-gray-50'
+                      }`}
+                    >
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={option.option}
+                          onChange={(e) => handleEdit(`option_${idx}`, e.target.value)}
+                          className="w-full p-2 border rounded"
+                        />
+                      ) : (
+                        <>
+                          {option.option}
+                          {idx === Number(currentQuestion.correctAnswer) && (
+                            <span className="ml-2 text-green-600">✓</span>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    <div className="mt-2 ml-4">
+                      {idx === Number(currentQuestion.correctAnswer) ? (
+                        <div className="text-green-600">
+                          <span className="font-semibold">Correct: </span>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              value={option.explanation}
+                              onChange={(e) => handleEdit(`explanation_${idx}`, e.target.value)}
+                              className="w-full p-2 border rounded"
+                            />
+                          ) : (
+                            option.explanation
+                          )}
+                        </div>
+                      ) : (
+                        <div className="text-red-600">
+                          <span className="font-semibold">Incorrect: </span>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              value={option.explanation || "This is not the correct answer."}
+                              onChange={(e) => handleEdit(`explanation_${idx}`, e.target.value)}
+                              className="w-full p-2 border rounded"
+                            />
+                          ) : (
+                            option.explanation || "This is not the correct answer."
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    {isEditing && (
+                      <div className="mt-2">
+                        <label className="flex items-center">
+                          <input
+                            type="radio"
+                            checked={idx === Number(currentQuestion.correctAnswer)}
+                            onChange={() => handleEdit('correctAnswer', idx)}
+                            className="mr-2"
+                          />
+                          Set as correct answer
+                        </label>
+                      </div>
                     )}
                   </div>
                 ))}
@@ -98,15 +194,35 @@ const PreviewModal = ({
             )}
 
             {currentQuestion.type === 'fill_blank' && (
-              <div className="p-3 rounded-lg border border-green-500 bg-green-50">
-                Correct Answer: {currentQuestion.correctAnswer}
+              <div>
+                <div className="p-3 rounded-lg border border-green-500 bg-green-50">
+                  <div className="font-semibold mb-2">Correct Answer:</div>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={currentQuestion.correctAnswer}
+                      onChange={(e) => handleEdit('correctAnswer', e.target.value)}
+                      className="w-full p-2 border rounded"
+                    />
+                  ) : (
+                    currentQuestion.correctAnswer
+                  )}
+                </div>
               </div>
             )}
           </div>
 
           <div className="bg-blue-50 p-4 rounded-lg">
             <h5 className="font-semibold mb-2">Explanation:</h5>
-            <p>{currentQuestion.explanation}</p>
+            {isEditing ? (
+              <textarea
+                value={currentQuestion.explanation}
+                onChange={(e) => handleEdit('explanation', e.target.value)}
+                className="w-full p-2 border rounded min-h-[100px]"
+              />
+            ) : (
+              <p>{currentQuestion.explanation}</p>
+            )}
           </div>
         </div>
 
@@ -136,9 +252,7 @@ const PreviewModal = ({
             </button>
           </div>
           <button
-            onClick={()=>{
-              onSave(currentQuestion);
-            }}
+            onClick={() => onSave(currentQuestion)}
             disabled={isSaving}
             className={`px-6 py-2 rounded-lg ${
               isSaving
@@ -235,6 +349,7 @@ export default function MaterialsList() {
         body: JSON.stringify({
           category,
           question: question,
+          action: 'update'
         }),
       });
 
@@ -242,8 +357,11 @@ export default function MaterialsList() {
         throw new Error('Failed to save questions');
       }
 
+      alert('Question saved successfully!');
+      
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to save questions');
+      alert('Failed to save question. Please try again.');
     } finally {
       setIsSaving(false);
     }

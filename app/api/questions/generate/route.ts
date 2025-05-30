@@ -74,10 +74,24 @@ For multiple choice:
 {
   "type": "multiple_choice",
   "question": "question text",
-  "options": ["option1", "option2", "option3", "option4"],
+  "options": [{
+    "option": "option1",
+    "explanation": "explanation for option1 why is corect or wrong"
+  },
+  {
+    "option": "option2",
+    "explanation": "explanation for option2 why is corect or wrong"
+  },
+  {
+    "option": "option3  ",
+    "explanation": "explanation for option3 why is corect or wrong"
+  },
+  {
+    "option": "option4",
+    "explanation": "explanation for option4 why is corect or wrong"
+  }],
   "correctAnswer": 0-3,
   "explanation": "detailed explanation",
-  "wrongAnswerExplanations": ["why option1 is wrong", "", "why option3 is wrong", "why option4 is wrong"],
   "language": "${currentLanguage}",
   "translation": [
     {
@@ -108,6 +122,7 @@ For fill in the blank:
   ]
 }
 ${userPrompt}
+Ensure the explanation for multiple choice is in the correct index with the correct explanation.
 Ensure all responses are in valid JSON format.
 For the wrongAnswerExplanations and explanation please provide in "Bahasa Indonesia"
 but for the question and answer please provide in "${currentLanguage}"`
@@ -153,9 +168,7 @@ but for the question and answer please provide in "${currentLanguage}"`
             if (!question.type || !question.question || !question.explanation) {
                 throw new Error(`Question ${index + 1} is missing required fields`);
             }
-            if (question.type === 'multiple_choice' && (!Array.isArray(question.options) || !question.wrongAnswerExplanations)) {
-                throw new Error(`Multiple choice question ${index + 1} is missing required fields`);
-            }
+
             if (question.type === 'fill_blank' && !question.correctAnswer) {
                 throw new Error(`Fill in the blank question ${index + 1} is missing required fields`);
             }
@@ -169,10 +182,7 @@ but for the question and answer please provide in "${currentLanguage}"`
             createdAt: new Date().toISOString()
         }));
 
-        await appendSheetData(
-            process.env.QUESTIONS_SHEET_ID || '',
-            sheetData
-        );
+
 
         return NextResponse.json({ success: true, questions });
     } catch (error) {

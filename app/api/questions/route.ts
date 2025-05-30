@@ -71,7 +71,6 @@ export async function GET(request: Request) {
         ...(question.type === 'multiple_choice' ? {
           options: JSON.parse(question.options),
           correctAnswer: question.correctAnswer,
-          wrongAnswerExplanations: JSON.parse(question.wrongAnswerExplanations),
         } : {
           correctAnswer: question.correctAnswer,
           caseSensitive: question.caseSensitive,

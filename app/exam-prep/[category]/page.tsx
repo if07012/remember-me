@@ -14,7 +14,7 @@ interface BaseQuestion {
 
 interface MultipleChoiceQuestion extends BaseQuestion {
   type: 'multiple_choice';
-  options: string[];
+  options: any[];
   correctAnswer: number;
   wrongAnswerExplanations: string[];
 }
@@ -32,6 +32,7 @@ interface Answer {
   questionId: number;
   userAnswer: string | number;
   isCorrect: boolean;
+  question: Question;
 }
 
 export default function ExamPrepCategory() {
@@ -74,14 +75,16 @@ export default function ExamPrepCategory() {
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswer(answerIndex);
     setShowExplanation(true);
-    const correct = answerIndex === (currentQuestion as MultipleChoiceQuestion).correctAnswer;
+    console.log(currentQuestion);
+    const correct = parseInt(answerIndex.toString()) ===parseInt( (currentQuestion as MultipleChoiceQuestion).correctAnswer.toString());
     setIsCorrect(correct);
     
     // Store the answer
     const answer: Answer = {
       questionId: currentQuestion.id,
       userAnswer: answerIndex,
-      isCorrect: correct
+      isCorrect: correct,
+      question: currentQuestion
     };
     setAnswers([...answers, answer]);
   };
@@ -102,7 +105,7 @@ export default function ExamPrepCategory() {
     const answer: Answer = {
       questionId: question.id,
       userAnswer: fillBlankAnswer,
-      isCorrect: correct
+      isCorrect: correct,
     };
     setAnswers([...answers, answer  ]);
   };
@@ -228,13 +231,13 @@ export default function ExamPrepCategory() {
                   disabled={showExplanation}
                   className={`w-full p-3 text-left rounded-lg transition duration-200 ${
                     selectedAnswer === index
-                      ? index === (currentQuestion as MultipleChoiceQuestion).correctAnswer
+                      ? index === parseInt((currentQuestion as MultipleChoiceQuestion).correctAnswer.toString())
                         ? 'bg-green-100 border-green-500'
                         : 'bg-red-100 border-red-500'
                       : 'bg-gray-50 hover:bg-gray-100'
                   } ${showExplanation && index === (currentQuestion as MultipleChoiceQuestion).correctAnswer ? 'bg-green-100' : ''}`}
                 >
-                  {option}
+                  {option.option}
                 </button>
               ))}
             </div>
@@ -272,7 +275,7 @@ export default function ExamPrepCategory() {
               {!isCorrect && currentQuestion.type === 'multiple_choice' && selectedAnswer !== null && (
                 <div className="mb-3 p-3 bg-red-50 rounded">
                   <p className="text-red-700 font-medium">Why your answer is incorrect:</p>
-                  <p>{(currentQuestion as MultipleChoiceQuestion).wrongAnswerExplanations[selectedAnswer]}</p>
+                  <p>{(currentQuestion as MultipleChoiceQuestion).options[selectedAnswer].explanation }</p>
                 </div>
               )}
               {!isCorrect && currentQuestion.type === 'fill_blank' && (
@@ -282,10 +285,10 @@ export default function ExamPrepCategory() {
                   <p>The correct answer is: "{(currentQuestion as FillBlankQuestion).correctAnswer}"</p>
                 </div>
               )}
-              <div className="p-3 bg-green-50 rounded">
+             {isCorrect  && <div className="p-3 bg-green-50 rounded">
                 <p className="text-green-700 font-medium">Explanation:</p>
                 <p>{currentQuestion.explanation}</p>
-              </div>
+              </div>}
             </div>
           )}
 

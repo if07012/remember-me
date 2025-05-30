@@ -10,14 +10,13 @@ export async function POST(request: Request) {
         }
 
         // Format submission data for the sheet
-        const submissionData = answers.map(answer => ({
-            userId: userId || 'anonymous',
-            category,
-            questionId: answer.questionId,
-            userAnswer: answer.userAnswer,
-            isCorrect: answer.isCorrect,
-            submittedAt: new Date().toISOString(),
-        }));
+        const submissionData = {
+            category: category,
+            answers: JSON.stringify(answers),
+            totalCorrect: answers.filter(a => a.isCorrect).length,
+            totalQuestions: answers.length,
+            submittedAt: new Date().toISOString()
+        }
 
         // Get the Google Sheet document
         const doc = await getGoogleSheet(process.env.QUESTIONS_SHEET_ID || '');
@@ -29,12 +28,13 @@ export async function POST(request: Request) {
         if (!sheet) {
             // If sheet doesn't exist, create it
             sheet = await doc.addSheet({ title: sheetName });
+            await sheet.setHeaderRow(['category', 'answers', 'totalCorrect', 'totalQuestions', 'submittedAt']);
         }
 
         // Save to Google Sheets
         await appendSheetData(
             process.env.QUESTIONS_SHEET_ID || '',
-            submissionData,
+            [submissionData],
             sheetName
         );
 
