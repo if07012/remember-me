@@ -69,7 +69,7 @@ export async function updateSheetData(
 
     const row = rows[rowIndex];
     Object.entries(data).forEach(([key, value]) => {
-      row[key] = value;
+      (row as any)[key] = value;
     });
     await row.save();
 
