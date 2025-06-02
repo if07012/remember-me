@@ -2,9 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
-
-export default async function Page({ params }: { params: Promise<{ level: string }> }) {
-    const { level } = await params
+function Question({ level }: { level: string }) {
     const [questions, setQuestions] = useState<any[]>([]);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
@@ -121,4 +119,8 @@ export default async function Page({ params }: { params: Promise<{ level: string
             </div>
         </div>
     )
+}
+export default async function Page({ params }: { params: Promise<{ level: string }> }) {
+    const { level } = await params
+    return <Question level={level} />
 }

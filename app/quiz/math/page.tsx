@@ -38,8 +38,8 @@ export default function Page() {
                     <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
                     <div className="block p-14 rounded-lg text-center cursor-pointer transition duration-300 animate-pulse"></div>
                 </>}
-                {!loading && levels.map((n: any) => {
-                    return <label
+                {!loading && levels.map((n: any,index) => {
+                    return <label key={index}
                         className={`block p-8 rounded-lg text-center cursor-pointer transition duration-300 ${n.isPass
                             ? "bg-blue-100 border-2 border-blue-500"
                             : "bg-gray-50 hover:bg-blue-50"

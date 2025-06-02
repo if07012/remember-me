@@ -36,9 +36,7 @@ async function postData(body: any, type: string, module: string, isPass: string)
         console.error('Error:', error);
     }
 }
-
-export default async function Page({ params }: { params: Promise<{ level: string }> }) {
-    const { level } = await params
+function Component({ level }: { level: string }) {
     const [questions, setQuestions] = useState<any[]>([]);
     const [report, setReport] = useState<any>({});
     const [start, setStart] = useState<boolean>(false);
@@ -268,7 +266,7 @@ export default async function Page({ params }: { params: Promise<{ level: string
                         type="submit"
                         className="w-full mt-16 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300"
                         onClick={() => {
-                            window.location.href = (`/quiz/math/learn`)
+                            window.location.href = (`/quiz/math/${level}/learn`)
                         }}
                     >
                         <h2 className="text-4xl font-semibold mb-4">Back </h2>
@@ -277,4 +275,8 @@ export default async function Page({ params }: { params: Promise<{ level: string
             </>}
         </div>
     )
+}
+export default async function Page({ params }: { params: Promise<{ level: string }> }) {
+    const { level } = await params
+    return <Component level={level} />
 }
