@@ -70,25 +70,45 @@ Material: ${material}
 
 
 Format the response as a JSON array of questions where each question follows this structure:
+
+For fill_blank:
+{
+  "type": "fill_blank",
+  "question": "question text with ___ for blank",
+  "correctAnswer": "correct answer",
+  "explanation": "detailed explanation in Bahasa Indonesia",
+  "caseSensitive": boolean,
+  "acceptableAnswers": ["answer1", "answer2"],
+  "language": "${currentLanguage}",
+  "translation": [
+    {
+      "fromLanguage": "${currentLanguage}",
+      "toLanguage": "Indonesia",
+      "word": "extract every word from question",
+      "translation": "translation",
+    }
+  ]
+}
+  
 For multiple choice:
 {
   "type": "multiple_choice",
   "question": "question text",
   "options": [{
     "option": "option1",
-    "explanation": "explanation for option1 why is corect or wrong"
+    "explanation": "explanation for option1 why is corect or wrong in Bahasa Indonesia"
   },
   {
     "option": "option2",
-    "explanation": "explanation for option2 why is corect or wrong"
+    "explanation": "explanation for option2 why is corect or wrong in Bahasa Indonesia"
   },
   {
     "option": "option3  ",
-    "explanation": "explanation for option3 why is corect or wrong"
+    "explanation": "explanation for option3 why is corect or wrong in Bahasa Indonesia"
   },
   {
     "option": "option4",
-    "explanation": "explanation for option4 why is corect or wrong"
+    "explanation": "explanation for option4 why is corect or wrong in Bahasa Indonesia"
   }],
   "correctAnswer": 0-3,
   "explanation": "detailed explanation",
@@ -103,29 +123,12 @@ For multiple choice:
   ]
 }
 
-For fill in the blank:
-{
-  "type": "fill_blank",
-  "question": "question text with ___ for blank",
-  "correctAnswer": "correct answer",
-  "explanation": "detailed explanation",
-  "caseSensitive": boolean,
-  "acceptableAnswers": ["answer1", "answer2"],
-  "language": "${currentLanguage}",
-  "translation": [
-    {
-      "fromLanguage": "${currentLanguage}",
-      "toLanguage": "Indonesia",
-      "word": "extract every word from question",
-      "translation": "translation",
-    }
-  ]
-}
 ${userPrompt}
 Ensure the explanation for multiple choice is in the correct index with the correct explanation.
-Ensure all responses are in valid JSON format.
 For the wrongAnswerExplanations and explanation please provide in "Bahasa Indonesia"
-but for the question and answer please provide in "${currentLanguage}"`
+but for the question and answer please provide in "${currentLanguage}"
+Ensure all responses are in valid JSON format.
+`
                 }
             ],
             model: 'deepseek-r1-distill-llama-70b',
@@ -156,7 +159,6 @@ but for the question and answer please provide in "${currentLanguage}"`
         if (!content) {
             throw new Error('No response from Groq API');
         }
-
         // Parse and validate the generated questions
         const questions = extractJsonFromMarkdown(content);
         if (!Array.isArray(questions)) {

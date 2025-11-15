@@ -67,6 +67,8 @@ const PreviewModal = ({
       updatedQuestion.correctAnswer = value;
     } else if (field === 'explanation') {
       updatedQuestion.explanation = value as string;
+    } else if (field === 'question') {
+      updatedQuestion.question = value as string;
     } else if (field.startsWith('option_')) {
       const optionIndex = parseInt(field.split('_')[1]);
       if (updatedQuestion.type === 'multiple_choice' && updatedQuestion.options) {
@@ -115,7 +117,17 @@ const PreviewModal = ({
           </div>
           
           <div className="mb-6">
-            <h4 className="font-semibold mb-4">{currentQuestion.question}</h4>
+            <h4 className="font-semibold mb-4">
+              {isEditing ? (
+                <textarea
+                  value={currentQuestion.question}
+                  onChange={(e) => handleEdit('question', e.target.value)}
+                  className="w-full p-2 border rounded min-h-[60px]"
+                />
+              ) : (
+                currentQuestion.question
+              )}
+            </h4>
             
             {currentQuestion.type === 'multiple_choice' && (
               <div className="space-y-4">
@@ -357,7 +369,6 @@ export default function MaterialsList() {
         throw new Error('Failed to save questions');
       }
 
-      alert('Question saved successfully!');
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to save questions');

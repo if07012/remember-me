@@ -78,12 +78,7 @@ export async function GET(request: Request) {
         })
       }));
 
-    if (questions.length === 0) {
-      return NextResponse.json(
-        { error: 'No questions found for this category' },
-        { status: 404 }
-      );
-    }
+
 
     return NextResponse.json(questions);
   } catch (error) {

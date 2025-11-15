@@ -9,12 +9,11 @@ export default function Page() {
     
     useEffect(() => {
         const callApi = async () => {
-            const response = await fetch('https://bengkel-api-db-a0gpcsexa5cwe9g2.southeastasia-01.azurewebsites.net/api/sheet/all?group=Math',
+            const response = await fetch('/api/sheet/all?group=Math',
                 {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'x-functions-key': '1mfIulpMhjZ5agPydsogLoHLMGiv2Pgt'
+                        'Content-Type': 'application/json'
                     }
                 }
             )

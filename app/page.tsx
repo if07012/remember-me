@@ -23,6 +23,10 @@ export default function Page() {
           <span className="text-4xl mb-4 block">🌐</span>
           <h2 className="text-xl font-semibold">All Categories</h2>
         </Link>
+        <Link href="/vocabulary" className="block bg-white p-6 rounded-lg shadow-md text-center transition duration-300 hover:shadow-lg hover:bg-indigo-50">
+          <span className="text-4xl mb-4 block">💭</span>
+          <h2 className="text-xl font-semibold">Remember Vocabulary</h2>
+        </Link>
       </div>
     </main>
   );
