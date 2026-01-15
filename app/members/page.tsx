@@ -75,10 +75,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ q
         <h1 className="text-xl font-semibold">Members</h1>
         <Link className="rounded bg-black px-3 py-2 text-white" href="/members/new">Add Member</Link>
       </div>
-      {/* @ts-expect-error Server Component within same file */}
       <Search defaultValue={q} />
       <Suspense>
-        {/* @ts-expect-error Async Server Component */}
         <MembersTable q={q} />
       </Suspense>
     </div>
