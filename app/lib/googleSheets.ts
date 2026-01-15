@@ -79,7 +79,7 @@ export async function updateSheetData(
     console.error('Error updating Google Sheet:', error);
     throw error;
   }
-} 
+}
 
 // New helpers for id-based CRUD on a named sheet
 export async function ensureSheetWithHeaders(
@@ -96,7 +96,7 @@ export async function ensureSheetWithHeaders(
     const currentHeaders = sheet.headerValues || [];
     const missing = headers.filter((h) => !currentHeaders.includes(h));
     if (missing.length > 0) {
-      sheet.headerValues = [...currentHeaders, ...missing];
+      // sheet.headerValues = [...currentHeaders, ...missing];
       await sheet.saveUpdatedCells();
     }
   }
