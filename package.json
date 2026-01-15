@@ -44,8 +44,5 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "tsx": "^4.7.0"
-  },
-  "engines": {
-    "node": ">=20.12.0"
   }
 }
